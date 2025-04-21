@@ -34,7 +34,7 @@ namespace damn {
 		GameManager() = default;
 
 		/// @brief Destructora por defecto
-		~GameManager() = default;
+		~GameManager();
 
 		/// @brief Metodo update heredado de Component 
 		/// @param dt El tiempo entre frames calculado por el motor

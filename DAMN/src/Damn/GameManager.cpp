@@ -13,6 +13,10 @@
 #include <Transform.h>
 #include <ErrorHandler.h>
 #include "BulletPlayerDamage.h"
+#include "Tracker.h"
+#include "Serializers/JSONSerializer.h"
+#include "FilePersistence.h"
+#include "Tracker.h"
 
 void damn::GameManager::ManageTimer(float dt)
 {
@@ -23,6 +27,11 @@ void damn::GameManager::ManageTimer(float dt)
 			_uiManager->SetTimeLeft(left);
 		_timerText = (float)left;
 	}
+}
+
+damn::GameManager::~GameManager()
+{
+	Tracker::End();
 }
 
 void damn::GameManager::Update(float dt)
@@ -111,6 +120,15 @@ void damn::GameManager::LoseGame() {
 
 void damn::GameManager::Init(eden_script::ComponentArguments* args)
 {
+	InitValues init = Tracker::Init("Damn", Tracker::P_FILE, Tracker::S_JSON);
+	if (init.couldInitialize) {
+		init.serializer->init(nullptr);
+		static_cast<FilePersistence*> (init.persistence)->Init("telemetry.json");
+
+		// Meter primer evento de inicio, tendria que ser propio del tracker, quiza una funcion Start del tracker
+	}
+
+
 	_maxTime = args->GetValueToFloat("MaxTime");
 	_timer = 0;
 	_timeNextRound = _timer + _timeCalm;
