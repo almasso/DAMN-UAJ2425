@@ -102,6 +102,7 @@
     <ClInclude Include="..\..\src\Damn\BulletEnemyDamage.h" />
     <ClInclude Include="..\..\src\Damn\BulletPlayerDamage.h" />
     <ClInclude Include="..\..\src\Damn\ChangeCameraBackground.h" />
+    <ClInclude Include="..\..\src\Damn\LevelStartEvent.h" />
     <ClInclude Include="..\..\src\Damn\MainMenuCameraRotation.h" />
     <ClInclude Include="..\..\src\Damn\MenuBullets.h" />
     <ClInclude Include="..\..\src\Damn\ProjectileMovement.h" />
@@ -130,6 +131,7 @@
     <ClCompile Include="..\..\src\Damn\BulletEnemyDamage.cpp" />
     <ClCompile Include="..\..\src\Damn\BulletPlayerDamage.cpp" />
     <ClCompile Include="..\..\src\Damn\ChangeCameraBackground.cpp" />
+    <ClCompile Include="..\..\src\Damn\LevelStartEvent.cpp" />
     <ClCompile Include="..\..\src\Damn\MainMenuCameraRotation.cpp" />
     <ClCompile Include="..\..\src\Damn\MenuBullets.cpp" />
     <ClCompile Include="..\..\src\Damn\ProjectileMovement.cpp" />

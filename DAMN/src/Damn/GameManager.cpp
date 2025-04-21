@@ -18,6 +18,8 @@
 #include "FilePersistence.h"
 #include "Tracker.h"
 
+#include "LevelStartEvent.h"
+
 void damn::GameManager::ManageTimer(float dt)
 {
 	_timer += dt;
@@ -200,6 +202,12 @@ void damn::GameManager::Play()
 		_ent->GetComponent<eden_ec::CAudioEmitter>()->SetVolume(0.6f);
 		_ent->GetComponent<eden_ec::CAudioEmitter>()->SetLoop(true);
 	}
+
+	LevelStartEvent* levelStart = new LevelStartEvent(_currentMap);
+	if (Tracker::Instance()) {
+		Tracker::Instance()->TrackEvent(levelStart);
+		Tracker::Instance()->Flush();
+	}
 }
 
 void damn::GameManager::ChangeScene(std::string sceneName) {
@@ -328,4 +336,10 @@ void damn::GameManager::NextMap() {
 		_currentMap = 0;
 	}
 	ChangeScene(_extraLevelNames[_currentMap]);
+	
+	LevelStartEvent* levelStart = new LevelStartEvent(_currentMap);
+	if (Tracker::Instance()) {
+		Tracker::Instance()->TrackEvent(levelStart);
+		Tracker::Instance()->Flush();
+	}
 }

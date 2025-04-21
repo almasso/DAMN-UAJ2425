@@ -27,6 +27,7 @@
     <ClCompile Include="..\..\src\Damn\MenuBullets.cpp" />
     <ClCompile Include="..\..\src\Damn\SoundController.cpp" />
     <ClCompile Include="..\..\src\Damn\RomeComponent.cpp" />
+    <ClCompile Include="..\..\src\Damn\LevelStartEvent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Damn\CameraMovement.h" />
@@ -55,5 +56,6 @@
     <ClInclude Include="..\..\src\Damn\MenuBullets.h" />
     <ClInclude Include="..\..\src\Damn\SoundController.h" />
     <ClInclude Include="..\..\src\Damn\RomeComponent.h" />
+    <ClInclude Include="..\..\src\Damn\LevelStartEvent.h" />
   </ItemGroup>
 </Project>
