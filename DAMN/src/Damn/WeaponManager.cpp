@@ -9,6 +9,9 @@
 #include "UIManager.h"
 #include "GameManager.h"
 
+#include "Tracker.h"
+#include "ShotEvent.h"
+
 void damn::WeaponManager::Start()
 {
 	eden::SceneManager* mngr = eden::SceneManager::getInstance();
@@ -21,7 +24,11 @@ void damn::WeaponManager::Start()
 
 void damn::WeaponManager::Shoot()
 {
-	_weapons[_actualWeapon]->Shoot();
+	if (_weapons[_actualWeapon]->Shoot(_NumTotalBullets)) {
+
+		SetShotEvent();
+		_NumTotalBullets++;
+	}
 	UpdateUIAmmo();
 }
 
@@ -110,4 +117,36 @@ void damn::WeaponManager::UnlockBaseWeapon()
 	if (_uiManager)
 		_uiManager->ChangeWeapon(ammo.first, ammo.second, _actualWeapon);
 	_hasDefaultWeapon = true; 
+}
+
+void damn::WeaponManager::SetShotEvent()
+{
+	std::string info;
+	if (_weapons.size() <= 1) {
+		info= "NO MORE WEAPONS UNLOCKED";
+	}
+	else {
+		switch (_actualWeapon)
+		{
+		case damn::WeaponManager::GUN:
+			info += "{SHOTGUN: _magazineAmmo-> " + std::to_string(_weapons[WEAPON::SHOTGUN]->GetAmmo().first) + "_currentAmmo-> " + std::to_string(_weapons[WEAPON::SHOTGUN]->GetAmmo().second) + "}";
+			if (_weapons.size() > 2)info += "{RIFLE: _magazineAmmo-> " + std::to_string(_weapons[WEAPON::RIFLE]->GetAmmo().first) + "_currentAmmo-> " + std::to_string(_weapons[WEAPON::RIFLE]->GetAmmo().second) + "}";
+			break;
+		case damn::WeaponManager::SHOTGUN:
+			info += "{GUN: _magazineAmmo-> " + std::to_string(_weapons[WEAPON::GUN]->GetAmmo().first) + "_currentAmmo-> " + std::to_string(_weapons[WEAPON::GUN]->GetAmmo().second) + "}";
+			if (_weapons.size() > 2)info += "{RIFLE: _magazineAmmo-> " + std::to_string(_weapons[WEAPON::RIFLE]->GetAmmo().first) + "_currentAmmo-> " + std::to_string(_weapons[WEAPON::RIFLE]->GetAmmo().second) + "}";
+			break;
+		case damn::WeaponManager::RIFLE:
+			info += "{GUN: _magazineAmmo-> " + std::to_string(_weapons[WEAPON::GUN]->GetAmmo().first) + "_currentAmmo-> " + std::to_string(_weapons[WEAPON::GUN]->GetAmmo().second) + "}";
+			info += "{SHOTGUN: _magazineAmmo-> " + std::to_string(_weapons[WEAPON::SHOTGUN]->GetAmmo().first) + "_currentAmmo-> " + std::to_string(_weapons[WEAPON::SHOTGUN]->GetAmmo().second) + "}";
+			break;
+		default:
+			break;
+		}
+	}
+	ShotEvent* shot = new ShotEvent((int)_actualWeapon, _NumTotalBullets ,info);
+	if (Tracker::Instance()) {
+		Tracker::Instance()->TrackEvent(shot);
+		Tracker::Instance()->Flush();
+	}
 }

@@ -7,6 +7,10 @@
 #include "Health.h"
 #include "EnemyHealth.h"
 
+#include "Tracker.h"
+#include "ShotCollisionEvent.h"
+#include "ProjectileMovement.h"
+
 void damn::BulletEnemyDamage::Start()
 {
 	eden_script::LuaManager* _luaMngr = eden_script::ScriptManager::getInstance()->GetLuaManager();
@@ -25,8 +29,22 @@ void damn::BulletEnemyDamage::HasHitEnemy()
 		_healthComponent = _other->GetComponent<EnemyHealth>();
 		_healthComponent->LoseHealth(_self->GetComponent<BulletEnemyDamage>()->_damage);
 		_self->SetAlive(false);
+
+		ShotCollisionEvent* collision = new ShotCollisionEvent(_self->GetComponent<ProjectileMovement>()->bulletID, 0, true, _healthComponent->GetCurrentHealth()<=0);
+
+		if (Tracker::Instance()) {
+			Tracker::Instance()->TrackEvent(collision);
+			Tracker::Instance()->Flush();
+		}
 	}
 	else if (!_other->HasComponent("BULLET_ENEMY_DAMAGE") && !_other->HasComponent("BULLET_PLAYER_DAMAGE")) {
 		_self->SetAlive(false);
+
+		ShotCollisionEvent* collision = new ShotCollisionEvent(_self->GetComponent<ProjectileMovement>()->bulletID, 0, false, false);
+	
+		if (Tracker::Instance()) {
+			Tracker::Instance()->TrackEvent(collision);
+			Tracker::Instance()->Flush();
+		}
 	}
 }

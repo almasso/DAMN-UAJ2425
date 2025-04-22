@@ -80,6 +80,10 @@ namespace damn {
 		/// @brief ID del componente
 		/// @return Devuelve el ID del componente
 		static std::string GetID() { return "GAMEMANAGER"; };
+		//TELEMETRY SYSTEM
+		void SetLevelStartEvent();
+		void SetLevelEndEvent();
+
 	protected:
 		/// @brief Metodo llamado al terminar la partida. Suena la musica correspondiente al estado final y notifica al UIManager que se ha acabado la partida
 		void EndGame(std::string endSong);

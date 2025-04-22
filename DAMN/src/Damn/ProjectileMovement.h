@@ -32,6 +32,11 @@ namespace damn {
 		/// @return Devuelve el ID del componente
 		static std::string GetID() { return "PROYECTILE_MOVEMENT"; }
 
+
+		//TELEMETRY SYSTEM
+		int bulletID;
+
+
 	protected:
 		/// @brief Construye el componente dado unos argumentos. Se obtendran de una lectura de un .lua
 		/// @param args Argumentos leidos de .lua

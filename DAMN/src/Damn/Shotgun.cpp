@@ -25,7 +25,7 @@ void damn::Shotgun::Start()
 	WeaponComponent::Start();
 }
 
-void damn::Shotgun::Shoot()
+bool damn::Shotgun::Shoot(int _bulletsID)
 {
 	if (_canShoot && _magazineAmmo > 0 && !isAnyAnimPlaying()) {
 		float alfa = (float) ANGLE / _numBalas;
@@ -40,15 +40,18 @@ void damn::Shotgun::Shoot()
 			
 			bullet = CreateBullet("ShotgunShell");
 			bullet->GetComponent<damn::ProjectileMovement>()->SetDirection(dir.Normalized() * -1);
+			bullet->GetComponent<damn::ProjectileMovement>()->bulletID = _bulletsID;
 		}
 		_canShoot = false;
 		_elapsedTime = 0;
 		_magazineAmmo--;
 		_particle->Reset();
 		PlayShootAnim();
+		return true;
 	}
 	else if (_magazineAmmo == 0)
 		Reload();
+	return false;
 }
 
 void damn::Shotgun::PlayIdleAnim()
