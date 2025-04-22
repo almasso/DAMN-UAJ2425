@@ -158,7 +158,10 @@ void damn::ButtonFunctions::BackToMainMenu() {
 	eden::SceneManager* mngr = eden::SceneManager::getInstance();
 	mngr->ChangeScene("Menu");
 	eden_ec::Entity* tmp = mngr->FindEntity("GAME_MANAGER");
-	if (tmp) tmp->SetAlive(false);
+	if (tmp) {
+		tmp->GetComponent<GameManager>()->SetLevelEndEvent();
+		tmp->SetAlive(false);
+	}
 }
 
 void damn::ButtonFunctions::PlaySound(std::string filename, float volume, bool loop) {

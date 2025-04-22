@@ -13,6 +13,9 @@
 #include "PhysicsManager.h"
 #include "CAudioEmitter.h"
 
+#include "Tracker.h"
+#include "ShotCollisionEvent.h"
+
 void damn::Rifle::Init(eden_script::ComponentArguments* args)
 {
 	WeaponComponent::Init(args);
@@ -26,22 +29,39 @@ void damn::Rifle::Start()
 	WeaponComponent::Start();
 }
 
-void damn::Rifle::Shoot()
+bool damn::Rifle::Shoot(int _bulletsID)
 {
 	eden_ec::CTransform* _pTr = _player->GetComponent<eden_ec::CTransform>();
 	if (_canShoot && _magazineAmmo > 0 && !isAnyAnimPlaying() && _player) {
+
+		ShotCollisionEvent* collision;
+		//TODO DISTANCE
+
 		physics_wrapper::RayCastHitResult result;
 		result = physics_manager::PhysicsManager::getInstance()->SingleHitRayCast(_pTr->GetPosition() + _pTr->GetForward()*-3, _pTr->GetPosition() + _pTr->GetForward() * -1000, true);
 		if (result.hasHit && result.entityHit->HasComponent("ENEMY_HEALTH")) {
 			result.entityHit->GetComponent<damn::EnemyHealth>()->LoseHealth(_rifleDamage);
+		
+			collision = new ShotCollisionEvent(_bulletsID, 0,true, result.entityHit->GetComponent<damn::EnemyHealth>()->GetCurrentHealth() <= 0);
 		}
+		else {
+			collision = new ShotCollisionEvent(_bulletsID, 0, false, false);
+		}
+
+		if (Tracker::Instance()) {
+			Tracker::Instance()->TrackEvent(collision);
+			Tracker::Instance()->Flush();
+		}
+
 		_canShoot = false;
 		_magazineAmmo--;
 		PlayShootAnim();
+		return true;
 	}
 	else if (_magazineAmmo <= 0) {
 		Reload();
 	}
+	return false;
 }
 
 void damn::Rifle::PlayIdleAnim()

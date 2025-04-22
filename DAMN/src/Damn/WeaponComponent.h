@@ -30,7 +30,7 @@ namespace damn {
 		eden_ec::Entity* CreateBullet(std::string blueprintID);
 
 		/// @brief Metodo que se llama cuando pueda disparar el arma, si no quedan balas en el cargador recarga
-		virtual void Shoot();
+		virtual bool Shoot(int _bulletsID);
 
 		/// @brief Metodo que se llama para recargar
 		virtual void Reload();
@@ -109,7 +109,6 @@ namespace damn {
 		
 		/// @brief Referencia al componente CParticleEmitter
 		eden_ec::CParticleEmitter* _particle = nullptr;
-
 	};
 }
 #endif 

@@ -16,7 +16,7 @@ namespace damn {
 		~Shotgun() = default;
 		
 		/// @brief Metodo que llama al metodo shoot del arma actual
-		void Shoot() override final;
+		bool Shoot(int _bulletsID) override final;
 
 		/// @brief ID del componente
 		/// @return Devuelve el ID del componente

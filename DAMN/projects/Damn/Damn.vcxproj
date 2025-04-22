@@ -102,6 +102,7 @@
     <ClInclude Include="..\..\src\Damn\BulletEnemyDamage.h" />
     <ClInclude Include="..\..\src\Damn\BulletPlayerDamage.h" />
     <ClInclude Include="..\..\src\Damn\ChangeCameraBackground.h" />
+    <ClInclude Include="..\..\src\Damn\LevelEndEvent.h" />
     <ClInclude Include="..\..\src\Damn\LevelStartEvent.h" />
     <ClInclude Include="..\..\src\Damn\MainMenuCameraRotation.h" />
     <ClInclude Include="..\..\src\Damn\MenuBullets.h" />
@@ -116,6 +117,8 @@
     <ClInclude Include="..\..\src\Damn\PlayerHealth.h" />
     <ClInclude Include="..\..\src\Damn\Rifle.h" />
     <ClInclude Include="..\..\src\Damn\RomeComponent.h" />
+    <ClInclude Include="..\..\src\Damn\ShotCollisionEvent.h" />
+    <ClInclude Include="..\..\src\Damn\ShotEvent.h" />
     <ClInclude Include="..\..\src\Damn\Shotgun.h" />
     <ClInclude Include="..\..\src\Damn\SoundController.h" />
     <ClInclude Include="..\..\src\Damn\Spawnpoint.h" />
@@ -131,6 +134,7 @@
     <ClCompile Include="..\..\src\Damn\BulletEnemyDamage.cpp" />
     <ClCompile Include="..\..\src\Damn\BulletPlayerDamage.cpp" />
     <ClCompile Include="..\..\src\Damn\ChangeCameraBackground.cpp" />
+    <ClCompile Include="..\..\src\Damn\LevelEndEvent.cpp" />
     <ClCompile Include="..\..\src\Damn\LevelStartEvent.cpp" />
     <ClCompile Include="..\..\src\Damn\MainMenuCameraRotation.cpp" />
     <ClCompile Include="..\..\src\Damn\MenuBullets.cpp" />
@@ -145,6 +149,8 @@
     <ClCompile Include="..\..\src\Damn\PlayerHealth.cpp" />
     <ClCompile Include="..\..\src\Damn\Rifle.cpp" />
     <ClCompile Include="..\..\src\Damn\RomeComponent.cpp" />
+    <ClCompile Include="..\..\src\Damn\ShotCollisionEvent.cpp" />
+    <ClCompile Include="..\..\src\Damn\ShotEvent.cpp" />
     <ClCompile Include="..\..\src\Damn\Shotgun.cpp" />
     <ClCompile Include="..\..\src\Damn\SoundController.cpp" />
     <ClCompile Include="..\..\src\Damn\Spawnpoint.cpp" />

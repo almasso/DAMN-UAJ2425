@@ -19,6 +19,7 @@
 #include "Tracker.h"
 
 #include "LevelStartEvent.h"
+#include "LevelEndEvent.h"
 
 void damn::GameManager::ManageTimer(float dt)
 {
@@ -47,6 +48,7 @@ void damn::GameManager::Update(float dt)
 			_roundState = CALM;
 			_numRound++;
 
+
 			if (Win()) return;
 
 			_timeNextRound = _timer + _timeCalm;
@@ -54,6 +56,7 @@ void damn::GameManager::Update(float dt)
 				UnlockGuns(true);
 			}
 			if (_numRound == _lastRoundMapChanged + ROUNDS_FOR_NEXT_MAP) {
+				SetLevelEndEvent();
 				NextMap();
 			}
 		}
@@ -118,6 +121,8 @@ void damn::GameManager::EndGame(std::string endSong) {
 void damn::GameManager::LoseGame() {
 	_roundState = LOSE_MENU;
 	_timer = 0;
+
+	SetLevelEndEvent();
 }
 
 void damn::GameManager::Init(eden_script::ComponentArguments* args)
@@ -203,11 +208,7 @@ void damn::GameManager::Play()
 		_ent->GetComponent<eden_ec::CAudioEmitter>()->SetLoop(true);
 	}
 
-	LevelStartEvent* levelStart = new LevelStartEvent(_currentMap);
-	if (Tracker::Instance()) {
-		Tracker::Instance()->TrackEvent(levelStart);
-		Tracker::Instance()->Flush();
-	}
+	SetLevelStartEvent();
 }
 
 void damn::GameManager::ChangeScene(std::string sceneName) {
@@ -330,6 +331,7 @@ void damn::GameManager::IncreaseDifficulty()
 
 }
 
+
 void damn::GameManager::NextMap() {
 	_lastRoundMapChanged = _numRound;
 	if (++_currentMap >= _extraLevelNames.size()) {
@@ -337,9 +339,24 @@ void damn::GameManager::NextMap() {
 	}
 	ChangeScene(_extraLevelNames[_currentMap]);
 	
+	SetLevelStartEvent();
+}
+
+
+void damn::GameManager::SetLevelStartEvent()
+{
 	LevelStartEvent* levelStart = new LevelStartEvent(_currentMap);
 	if (Tracker::Instance()) {
 		Tracker::Instance()->TrackEvent(levelStart);
+		Tracker::Instance()->Flush();
+	}
+}
+
+void damn::GameManager::SetLevelEndEvent()
+{
+	LevelEndEvent* levelEnd = new LevelEndEvent();
+	if (Tracker::Instance()) {
+		Tracker::Instance()->TrackEvent(levelEnd);
 		Tracker::Instance()->Flush();
 	}
 }

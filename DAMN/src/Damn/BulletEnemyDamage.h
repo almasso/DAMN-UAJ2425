@@ -21,6 +21,7 @@ namespace damn {
 	protected:
 		/// @brief Metodo heredado de Component que se usa para coger referencias a otros componentes
 		void Start() override;
+
 	};
 }
 

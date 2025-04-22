@@ -49,22 +49,25 @@ eden_ec::Entity*damn::WeaponComponent::CreateBullet(std::string blueprintID) {
 	return eden::SceneManager::getInstance()->InstantiateBlueprint(blueprintID, position, rotation);
 }
 
-void damn::WeaponComponent::Shoot()
+bool damn::WeaponComponent::Shoot(int _bulletsID)
 {
 	if (_canShoot && _magazineAmmo > 0 && !isAnyAnimPlaying()) {
 		
 		eden_ec::Entity* bullet = CreateBullet("Bullet");
 		if (bullet) {
 			bullet->GetComponent<damn::ProjectileMovement>()->SetDirection(eden_utils::Vector3(0,0,1));
+			bullet->GetComponent<damn::ProjectileMovement>()->bulletID = _bulletsID;
 		}
 		_canShoot = false;
 		_elapsedTime = 0;
 		_magazineAmmo--;
 		_particle->Reset();
 		PlayShootAnim();
+		return true;
 	}
 	else if (_magazineAmmo == 0)
 		Reload();
+	return false;
 }
 
 void damn::WeaponComponent::Reload()

@@ -78,6 +78,10 @@ namespace damn {
 
 		/// @brief Referencia al UIManager para actualizar la HUD
 		UIManager* _uiManager = nullptr;
+
+		//TELEMETRY SYSTEM
+		void SetShotEvent();
+		int _NumTotalBullets = 0;
 	};
 }
 #endif
