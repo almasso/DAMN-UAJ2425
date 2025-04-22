@@ -11,6 +11,7 @@
 
 #include "Tracker.h"
 #include "ShotEvent.h"
+#include "Transform.h"
 
 void damn::WeaponManager::Start()
 {
@@ -123,30 +124,34 @@ void damn::WeaponManager::SetShotEvent()
 {
 	std::string info;
 	if (_weapons.size() <= 1) {
-		info= "NO MORE WEAPONS UNLOCKED";
+		info = "{}";
 	}
 	else {
 		switch (_actualWeapon)
 		{
 		case damn::WeaponManager::GUN:
-			info += "{SHOTGUN: _magazineAmmo-> " + std::to_string(_weapons[WEAPON::SHOTGUN]->GetAmmo().first) + "_currentAmmo-> " + std::to_string(_weapons[WEAPON::SHOTGUN]->GetAmmo().second) + "}";
-			if (_weapons.size() > 2)info += "{RIFLE: _magazineAmmo-> " + std::to_string(_weapons[WEAPON::RIFLE]->GetAmmo().first) + "_currentAmmo-> " + std::to_string(_weapons[WEAPON::RIFLE]->GetAmmo().second) + "}";
+			info += "{'SHOTGUN': {'_magazineAmmo': " + std::to_string(_weapons[WEAPON::SHOTGUN]->GetAmmo().first) + ",'_currentAmmo': " + std::to_string(_weapons[WEAPON::SHOTGUN]->GetAmmo().second) + "}}";
+			if (_weapons.size() > 2)info += "{'RIFLE': {'_magazineAmmo': " + std::to_string(_weapons[WEAPON::RIFLE]->GetAmmo().first) + ",'_currentAmmo': " + std::to_string(_weapons[WEAPON::RIFLE]->GetAmmo().second) + "}}";
 			break;
 		case damn::WeaponManager::SHOTGUN:
-			info += "{GUN: _magazineAmmo-> " + std::to_string(_weapons[WEAPON::GUN]->GetAmmo().first) + "_currentAmmo-> " + std::to_string(_weapons[WEAPON::GUN]->GetAmmo().second) + "}";
-			if (_weapons.size() > 2)info += "{RIFLE: _magazineAmmo-> " + std::to_string(_weapons[WEAPON::RIFLE]->GetAmmo().first) + "_currentAmmo-> " + std::to_string(_weapons[WEAPON::RIFLE]->GetAmmo().second) + "}";
+			info += "{'GUN': {'_magazineAmmo': " + std::to_string(_weapons[WEAPON::GUN]->GetAmmo().first) + ",'_currentAmmo': " + std::to_string(_weapons[WEAPON::GUN]->GetAmmo().second) + "}}";
+			if (_weapons.size() > 2)info += "{'RIFLE': {'_magazineAmmo': " + std::to_string(_weapons[WEAPON::RIFLE]->GetAmmo().first) + ",'_currentAmmo': " + std::to_string(_weapons[WEAPON::RIFLE]->GetAmmo().second) + "}}";
 			break;
 		case damn::WeaponManager::RIFLE:
-			info += "{GUN: _magazineAmmo-> " + std::to_string(_weapons[WEAPON::GUN]->GetAmmo().first) + "_currentAmmo-> " + std::to_string(_weapons[WEAPON::GUN]->GetAmmo().second) + "}";
-			info += "{SHOTGUN: _magazineAmmo-> " + std::to_string(_weapons[WEAPON::SHOTGUN]->GetAmmo().first) + "_currentAmmo-> " + std::to_string(_weapons[WEAPON::SHOTGUN]->GetAmmo().second) + "}";
+			info += "{'GUN': {'_magazineAmmo': " + std::to_string(_weapons[WEAPON::GUN]->GetAmmo().first) + ",'_currentAmmo': " + std::to_string(_weapons[WEAPON::GUN]->GetAmmo().second) + "}}";
+			info += "{'SHOTGUN': {'_magazineAmmo': " + std::to_string(_weapons[WEAPON::SHOTGUN]->GetAmmo().first) + ",'_currentAmmo': " + std::to_string(_weapons[WEAPON::SHOTGUN]->GetAmmo().second) + "}}";
 			break;
 		default:
 			break;
 		}
 	}
-	ShotEvent* shot = new ShotEvent((int)_actualWeapon, _NumTotalBullets ,info);
+	ShotEvent* shot = new ShotEvent((int)_actualWeapon, _NumTotalBullets,
+		_weapons[_actualWeapon]->GetWeaponTransform().GetPosition().GetX(),
+		_weapons[_actualWeapon]->GetWeaponTransform().GetPosition().GetY(),
+		_weapons[_actualWeapon]->GetWeaponTransform().GetPosition().GetZ(),info);
 	if (Tracker::Instance()) {
 		Tracker::Instance()->TrackEvent(shot);
 		Tracker::Instance()->Flush();
 	}
+	else shot;
 }

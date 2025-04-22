@@ -350,6 +350,7 @@ void damn::GameManager::SetLevelStartEvent()
 		Tracker::Instance()->TrackEvent(levelStart);
 		Tracker::Instance()->Flush();
 	}
+	else delete levelStart;
 }
 
 void damn::GameManager::SetLevelEndEvent()
@@ -359,4 +360,5 @@ void damn::GameManager::SetLevelEndEvent()
 		Tracker::Instance()->TrackEvent(levelEnd);
 		Tracker::Instance()->Flush();
 	}
+	else delete levelEnd;
 }

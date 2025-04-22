@@ -10,6 +10,7 @@
 #include "CAudioEmitter.h"
 #include "CParticleEmitter.h"
 
+
 void damn::WeaponComponent::Init(eden_script::ComponentArguments* args)
 {
 	_maxAmmo = args->GetValueToInt("MaxAmmo");
@@ -137,4 +138,10 @@ void damn::WeaponComponent::PlayReloadAnim()
 bool damn::WeaponComponent::isAnyAnimPlaying()
 {
 	return (_animator->IsPlaying("reloadPistol") || _animator->IsPlaying("reloadSpecialPistol") || _animator->IsPlaying("shootPistol"));
+}
+
+
+eden_ec::CTransform damn::WeaponComponent::GetWeaponTransform()
+{
+	return *_tr;
 }

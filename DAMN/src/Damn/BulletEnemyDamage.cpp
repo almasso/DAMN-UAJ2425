@@ -3,6 +3,7 @@
 #include <ScriptManager.h>
 #include <LuaManager.h>
 #include <Entity.h>
+#include <Transform.h>
 
 #include "Health.h"
 #include "EnemyHealth.h"
@@ -24,27 +25,32 @@ void damn::BulletEnemyDamage::HasHitEnemy()
 	eden_ec::Entity* _other = luabridge::getGlobal(eden_script::ScriptManager::getInstance()->GetLuaManager()->GetLuaState(), "other");
 	eden_ec::Entity* _self = luabridge::getGlobal(eden_script::ScriptManager::getInstance()->GetLuaManager()->GetLuaState(), "self");
 	damn::Health* _healthComponent = nullptr;
-
+	eden_ec::CTransform* tr = _self->GetComponent<eden_ec::CTransform>();
+	
 	if (_other->HasComponent("ENEMY_HEALTH")) {
 		_healthComponent = _other->GetComponent<EnemyHealth>();
 		_healthComponent->LoseHealth(_self->GetComponent<BulletEnemyDamage>()->_damage);
-		_self->SetAlive(false);
 
-		ShotCollisionEvent* collision = new ShotCollisionEvent(_self->GetComponent<ProjectileMovement>()->bulletID, 0, true, _healthComponent->GetCurrentHealth()<=0);
+		ShotCollisionEvent* collision = new ShotCollisionEvent(_self->GetComponent<ProjectileMovement>()->bulletID,
+			tr->GetPosition().GetX(), tr->GetPosition().GetY(), tr->GetPosition().GetZ(), true, _healthComponent->GetCurrentHealth() <= 0);
 
 		if (Tracker::Instance()) {
 			Tracker::Instance()->TrackEvent(collision);
 			Tracker::Instance()->Flush();
 		}
+		else delete collision;
+		_self->SetAlive(false);
 	}
 	else if (!_other->HasComponent("BULLET_ENEMY_DAMAGE") && !_other->HasComponent("BULLET_PLAYER_DAMAGE")) {
-		_self->SetAlive(false);
 
-		ShotCollisionEvent* collision = new ShotCollisionEvent(_self->GetComponent<ProjectileMovement>()->bulletID, 0, false, false);
+		ShotCollisionEvent* collision = new ShotCollisionEvent(_self->GetComponent<ProjectileMovement>()->bulletID,
+			tr->GetPosition().GetX(), tr->GetPosition().GetY(), tr->GetPosition().GetZ(), false, false);
 	
 		if (Tracker::Instance()) {
 			Tracker::Instance()->TrackEvent(collision);
 			Tracker::Instance()->Flush();
 		}
+		else delete collision;
+		_self->SetAlive(false);
 	}
 }

@@ -54,6 +54,8 @@ namespace damn {
 		/// @return Devuelve el ID del componente
 		static std::string GetID() { return "WEAPON_COMPONENT"; }
 
+		eden_ec::CTransform GetWeaponTransform();
+
 	protected:
 		/// @brief Construye el componente dado unos argumentos. Se obtendran de una lectura de un .lua
 		/// @param args Argumentos leidos de .lua

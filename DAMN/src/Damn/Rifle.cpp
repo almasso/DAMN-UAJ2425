@@ -39,19 +39,23 @@ bool damn::Rifle::Shoot(int _bulletsID)
 
 		physics_wrapper::RayCastHitResult result;
 		result = physics_manager::PhysicsManager::getInstance()->SingleHitRayCast(_pTr->GetPosition() + _pTr->GetForward()*-3, _pTr->GetPosition() + _pTr->GetForward() * -1000, true);
-		if (result.hasHit && result.entityHit->HasComponent("ENEMY_HEALTH")) {
-			result.entityHit->GetComponent<damn::EnemyHealth>()->LoseHealth(_rifleDamage);
-		
-			collision = new ShotCollisionEvent(_bulletsID, 0,true, result.entityHit->GetComponent<damn::EnemyHealth>()->GetCurrentHealth() <= 0);
-		}
-		else {
-			collision = new ShotCollisionEvent(_bulletsID, 0, false, false);
-		}
+		if (result.hasHit) {
+			if (result.entityHit->HasComponent("ENEMY_HEALTH")) {
+				result.entityHit->GetComponent<damn::EnemyHealth>()->LoseHealth(_rifleDamage);
 
+				collision = new ShotCollisionEvent(_bulletsID, result.rayHitLocationPoint.GetX(), result.rayHitLocationPoint.GetY(), result.rayHitLocationPoint.GetZ(), true, result.entityHit->GetComponent<damn::EnemyHealth>()->GetCurrentHealth() <= 0);
+			}
+			else {
+				collision = new ShotCollisionEvent(_bulletsID, result.rayHitLocationPoint.GetX(), result.rayHitLocationPoint.GetY(), result.rayHitLocationPoint.GetZ(), false, false);
+			}
+		}
+		else collision = new ShotCollisionEvent(_bulletsID, LONG_MAX, LONG_MAX, LONG_MAX, false, false);
+		
 		if (Tracker::Instance()) {
 			Tracker::Instance()->TrackEvent(collision);
 			Tracker::Instance()->Flush();
 		}
+		else delete collision;
 
 		_canShoot = false;
 		_magazineAmmo--;
