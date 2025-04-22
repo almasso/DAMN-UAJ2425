@@ -22,7 +22,8 @@ bool ProgressionTracker::accept(TrackerEvent* trackerEvent)
 
 bool ProgressionTracker::process(Persistence* persistence, TrackerEvent* trackerEvent)
 {
-    persistence->QueueEvent(trackerEvent);
-    persistence->ForceFlush();
-    return true;
+    if (!persistence->QueueEvent(trackerEvent)) {
+        return false;
+    }
+    return persistence->ForceFlush();
 }

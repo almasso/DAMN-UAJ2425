@@ -8,6 +8,5 @@ bool GameEventTracker::accept(TrackerEvent* trackerEvent)
 
 bool GameEventTracker::process(Persistence* persistence, TrackerEvent* trackerEvent)
 {
-    persistence->QueueEvent(trackerEvent);
-    return true;
+    return persistence->QueueEvent(trackerEvent);
 }
