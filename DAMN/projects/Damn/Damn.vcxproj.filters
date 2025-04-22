@@ -39,6 +39,8 @@
     <ClCompile Include="..\..\src\Damn\ShotCollisionEvent.cpp">
       <Filter>Eventos</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\Damn\ProgressionTracker.cpp" />
+    <ClCompile Include="..\..\src\Damn\GameEventTracker.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\Damn\CameraMovement.h" />
@@ -79,6 +81,8 @@
     <ClInclude Include="..\..\src\Damn\ShotCollisionEvent.h">
       <Filter>Eventos</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\Damn\ProgressionTracker.h" />
+    <ClInclude Include="..\..\src\Damn\GameEventTracker.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Eventos">
