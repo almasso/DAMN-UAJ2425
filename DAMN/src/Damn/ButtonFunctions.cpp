@@ -156,12 +156,12 @@ void damn::ButtonFunctions::ChangeVolumeBar() {
 
 void damn::ButtonFunctions::BackToMainMenu() {
 	eden::SceneManager* mngr = eden::SceneManager::getInstance();
-	mngr->ChangeScene("Menu");
 	eden_ec::Entity* tmp = mngr->FindEntity("GAME_MANAGER");
 	if (tmp) {
 		if (mngr->GetCurrentScene()->GetSceneID() == "PauseMenu") tmp->GetComponent<GameManager>()->SetLevelEndEvent();
 		tmp->SetAlive(false);
 	}
+	mngr->ChangeScene("Menu");
 }
 
 void damn::ButtonFunctions::PlaySound(std::string filename, float volume, bool loop) {
