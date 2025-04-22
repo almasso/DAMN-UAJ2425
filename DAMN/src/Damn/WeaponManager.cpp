@@ -79,7 +79,7 @@ void damn::WeaponManager::UnlockShotGun()
 	_weapons.push_back(eden::SceneManager::getInstance()->GetCurrentScene()->GetEntityByID("Shotgun")->GetComponent<Shotgun>());
 	_numWeapons++;
 	_weapons[_actualWeapon]->SetVisible(false);
-	_actualWeapon = static_cast<WEAPON>((static_cast<int>(_numWeapons-1)));
+	_actualWeapon = WEAPON::SHOTGUN;
 	_weapons[_actualWeapon]->SetVisible(true);
 	std::pair<int, int> ammo = _weapons[_actualWeapon]->GetAmmo();
 	if (_uiManager)
@@ -92,7 +92,7 @@ void damn::WeaponManager::UnlockRifle()
 	_weapons.push_back(eden::SceneManager::getInstance()->GetCurrentScene()->GetEntityByID("Rifle")->GetComponent<Rifle>());
 	_numWeapons++;
 	_weapons[_actualWeapon]->SetVisible(false);
-	_actualWeapon = static_cast<WEAPON>((static_cast<int>(_numWeapons - 1)));
+	_actualWeapon = WEAPON::RIFLE;
 	_weapons[_actualWeapon]->SetVisible(true);
 	std::pair<int, int> ammo = _weapons[_actualWeapon]->GetAmmo();
 	if (_uiManager)
@@ -112,7 +112,7 @@ void damn::WeaponManager::UnlockBaseWeapon()
 	if (_hasDefaultWeapon) return; 
 	_weapons.push_back(eden::SceneManager::getInstance()->GetCurrentScene()->GetEntityByID("Gun")->GetComponent<WeaponComponent>());
 	_numWeapons++;
-	_actualWeapon = static_cast<WEAPON>((static_cast<int>(_numWeapons - 1)));
+	_actualWeapon = WEAPON::GUN;
 	_weapons[_actualWeapon]->SetVisible(true);
 	std::pair<int, int> ammo = _weapons[_actualWeapon]->GetAmmo();
 	if (_uiManager)

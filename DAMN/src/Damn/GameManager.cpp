@@ -51,7 +51,10 @@ void damn::GameManager::Update(float dt)
 			_numRound++;
 
 
-			if (Win()) return;
+			if (Win()) {
+				SetLevelEndEvent();
+				return;
+			}
 
 			_timeNextRound = _timer + _timeCalm;
 			if (_numRound == _lastRoundWeaponWasGiven + ROUNDS_FOR_NEXT_GUN) {
@@ -279,7 +282,7 @@ void damn::GameManager::UnlockGuns(bool newWeapon)
 		_lastRoundWeaponWasGiven = _numRound;
 		_numWeapons++;
 	}
-	if (_numWeapons > WeaponManager::WEAPON::SHOTGUN) {
+	if (_numWeapons > WeaponManager::WEAPON::SHOTGUN && _numWeapons < WeaponManager::WEAPON::RIFLE+1) {
 		_weaponManager->UnlockShotGun();
 	}
 	if (_numWeapons > WeaponManager::WEAPON::RIFLE) {
