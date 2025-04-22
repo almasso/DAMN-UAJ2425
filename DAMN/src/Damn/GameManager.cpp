@@ -36,6 +36,7 @@ void damn::GameManager::ManageTimer(float dt)
 
 damn::GameManager::~GameManager()
 {
+	if (levelsStated != levelsEnded)SetLevelEndEvent();
 	Tracker::End();
 }
 
@@ -51,7 +52,10 @@ void damn::GameManager::Update(float dt)
 			_numRound++;
 
 
-			if (Win()) return;
+			if (Win()) {
+				SetLevelEndEvent();
+				return;
+			}
 
 			_timeNextRound = _timer + _timeCalm;
 			if (_numRound == _lastRoundWeaponWasGiven + ROUNDS_FOR_NEXT_GUN) {
@@ -279,7 +283,7 @@ void damn::GameManager::UnlockGuns(bool newWeapon)
 		_lastRoundWeaponWasGiven = _numRound;
 		_numWeapons++;
 	}
-	if (_numWeapons > WeaponManager::WEAPON::SHOTGUN) {
+	if (_numWeapons > WeaponManager::WEAPON::SHOTGUN && _numWeapons < WeaponManager::WEAPON::RIFLE+1) {
 		_weaponManager->UnlockShotGun();
 	}
 	if (_numWeapons > WeaponManager::WEAPON::RIFLE) {
@@ -356,6 +360,7 @@ void damn::GameManager::SetLevelStartEvent()
 	LevelStartEvent* levelStart = new LevelStartEvent(_currentMap);
 	if (Tracker::Instance()) {
 		Tracker::Instance()->TrackEvent(levelStart);
+		levelsStated++;
 	}
 	else delete levelStart;
 }
@@ -365,6 +370,7 @@ void damn::GameManager::SetLevelEndEvent()
 	LevelEndEvent* levelEnd = new LevelEndEvent();
 	if (Tracker::Instance()) {
 		Tracker::Instance()->TrackEvent(levelEnd);
+		levelsEnded++;
 	}
 	else delete levelEnd;
 }

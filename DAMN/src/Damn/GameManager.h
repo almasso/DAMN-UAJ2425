@@ -207,6 +207,10 @@ namespace damn {
 
 		/// @brief Aumenta la dificultad
 		void IncreaseDifficulty(); 
+
+		//TELEMETRY SYSTEM
+		int levelsStated = 0;
+		int levelsEnded = 0;
 	};
 }
 #endif
