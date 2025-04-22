@@ -36,7 +36,6 @@ void damn::BulletEnemyDamage::HasHitEnemy()
 
 		if (Tracker::Instance()) {
 			Tracker::Instance()->TrackEvent(collision);
-			Tracker::Instance()->Flush();
 		}
 		else delete collision;
 		_self->SetAlive(false);
@@ -48,7 +47,6 @@ void damn::BulletEnemyDamage::HasHitEnemy()
 	
 		if (Tracker::Instance()) {
 			Tracker::Instance()->TrackEvent(collision);
-			Tracker::Instance()->Flush();
 		}
 		else delete collision;
 		_self->SetAlive(false);

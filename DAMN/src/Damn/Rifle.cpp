@@ -53,7 +53,6 @@ bool damn::Rifle::Shoot(int _bulletsID)
 		
 		if (Tracker::Instance()) {
 			Tracker::Instance()->TrackEvent(collision);
-			Tracker::Instance()->Flush();
 		}
 		else delete collision;
 

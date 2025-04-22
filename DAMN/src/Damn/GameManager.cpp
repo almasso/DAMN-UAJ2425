@@ -356,7 +356,6 @@ void damn::GameManager::SetLevelStartEvent()
 	LevelStartEvent* levelStart = new LevelStartEvent(_currentMap);
 	if (Tracker::Instance()) {
 		Tracker::Instance()->TrackEvent(levelStart);
-		Tracker::Instance()->Flush();
 	}
 	else delete levelStart;
 }
@@ -366,7 +365,6 @@ void damn::GameManager::SetLevelEndEvent()
 	LevelEndEvent* levelEnd = new LevelEndEvent();
 	if (Tracker::Instance()) {
 		Tracker::Instance()->TrackEvent(levelEnd);
-		Tracker::Instance()->Flush();
 	}
 	else delete levelEnd;
 }

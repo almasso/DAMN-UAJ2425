@@ -151,7 +151,6 @@ void damn::WeaponManager::SetShotEvent()
 		_weapons[_actualWeapon]->GetWeaponTransform().GetPosition().GetZ(),info);
 	if (Tracker::Instance()) {
 		Tracker::Instance()->TrackEvent(shot);
-		Tracker::Instance()->Flush();
 	}
 	else shot;
 }
