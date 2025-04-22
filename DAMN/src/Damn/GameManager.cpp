@@ -20,6 +20,8 @@
 
 #include "LevelStartEvent.h"
 #include "LevelEndEvent.h"
+#include "ProgressionTracker.h"
+#include "GameEventTracker.h"
 
 void damn::GameManager::ManageTimer(float dt)
 {
@@ -131,6 +133,12 @@ void damn::GameManager::Init(eden_script::ComponentArguments* args)
 	if (init.couldInitialize) {
 		init.serializer->init(nullptr);
 		static_cast<FilePersistence*> (init.persistence)->Init("telemetry.json");
+
+		ProgressionTracker* progressionTracker = new ProgressionTracker();
+		Tracker::Instance()->AddTrackerAsset(progressionTracker);
+
+		GameEventTracker* gameTracker = new GameEventTracker();
+		Tracker::Instance()->AddTrackerAsset(gameTracker);
 
 		// Meter primer evento de inicio, tendria que ser propio del tracker, quiza una funcion Start del tracker
 	}
