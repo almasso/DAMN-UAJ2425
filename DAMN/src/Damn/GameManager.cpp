@@ -144,7 +144,7 @@ void damn::GameManager::Init(eden_script::ComponentArguments* args)
 		GameEventTracker* gameTracker = new GameEventTracker();
 		Tracker::Instance()->AddTrackerAsset(gameTracker);
 
-		// Meter primer evento de inicio, tendria que ser propio del tracker, quiza una funcion Start del tracker
+		Tracker::Instance()->Start();
 	}
 
 
