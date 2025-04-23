@@ -152,5 +152,5 @@ void damn::WeaponManager::SetShotEvent()
 	if (Tracker::Instance()) {
 		Tracker::Instance()->TrackEvent(shot);
 	}
-	else shot;
+	else delete shot;
 }

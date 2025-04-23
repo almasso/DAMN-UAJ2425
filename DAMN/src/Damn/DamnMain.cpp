@@ -85,17 +85,20 @@ void LoadScene() {
 		std::string filename = baseDir + "/telemetry_" + sessionId;
 
 		// inicializa la persistencia con la sesion
-		static_cast<FilePersistence*>(init.persistence)->Init(filename);
+		bool canInitialize = static_cast<FilePersistence*>(init.persistence)->Init(filename);
 
-		
+		if (canInitialize) {
+			ProgressionTracker* progressionTracker = new ProgressionTracker();
+			Tracker::Instance()->AddTrackerAsset(progressionTracker);
 
-		ProgressionTracker* progressionTracker = new ProgressionTracker();
-		Tracker::Instance()->AddTrackerAsset(progressionTracker);
+			GameEventTracker* gameTracker = new GameEventTracker();
+			Tracker::Instance()->AddTrackerAsset(gameTracker);
 
-		GameEventTracker* gameTracker = new GameEventTracker();
-		Tracker::Instance()->AddTrackerAsset(gameTracker);
-
-		Tracker::Instance()->Start();
+			Tracker::Instance()->Start();
+		}
+		else {
+			Tracker::End();
+		}
 	}
 }
 
