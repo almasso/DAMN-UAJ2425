@@ -35,7 +35,6 @@ bool damn::Rifle::Shoot(int _bulletsID)
 	if (_canShoot && _magazineAmmo > 0 && !isAnyAnimPlaying() && _player) {
 
 		ShotCollisionEvent* collision;
-		//TODO DISTANCE
 
 		physics_wrapper::RayCastHitResult result;
 		result = physics_manager::PhysicsManager::getInstance()->SingleHitRayCast(_pTr->GetPosition() + _pTr->GetForward()*-3, _pTr->GetPosition() + _pTr->GetForward() * -1000, true);
