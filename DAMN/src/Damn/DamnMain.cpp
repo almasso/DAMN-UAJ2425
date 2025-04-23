@@ -31,6 +31,11 @@
 #include "FilePersistence.h"
 #include "ISerializer.h"
 
+#include <chrono>      
+#include <string>   
+#include <regex>        // <<-- Añadido
+#include <algorithm>    // std::remove_if
+
 void RegisterComponents() {
 	eden_ec::ComponentFactory* factory = eden_ec::ComponentFactory::getInstance();
 	factory->RegisterComponent<damn::ButtonFunctions>();
@@ -69,7 +74,20 @@ void LoadScene() {
 	InitValues init = Tracker::Init("Damn", Tracker::P_FILE, Tracker::S_JSON);
 	if (init.couldInitialize) {
 		init.serializer->init(nullptr);
-		static_cast<FilePersistence*> (init.persistence)->Init("telemetry");
+
+		//a bin
+		//static_cast<FilePersistence*> (init.persistence)->Init("telemetry");
+		
+
+		const std::string baseDir = "../analysis/data";
+
+		const std::string sessionId = Tracker::Instance()->GetSessionID();
+		std::string filename = baseDir + "/telemetry_" + sessionId;
+
+		// inicializa la persistencia con la sesion
+		static_cast<FilePersistence*>(init.persistence)->Init(filename);
+
+		
 
 		ProgressionTracker* progressionTracker = new ProgressionTracker();
 		Tracker::Instance()->AddTrackerAsset(progressionTracker);
