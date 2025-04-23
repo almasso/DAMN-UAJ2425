@@ -31,5 +31,6 @@ eden::Master* master;
 eden::SceneManager* scnManager;
 eden_error::ErrorHandler* errorHandler;
 SceneFunc LoadScene;
+SceneFunc EndGame;
 
 #endif /*EDEN_EXPORT_H_*/

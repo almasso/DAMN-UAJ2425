@@ -25,6 +25,11 @@
 #include "MenuBullets.h"
 #include "SoundController.h"
 #include "RomeComponent.h"
+#include "ProgressionTracker.h"
+#include "GameEventTracker.h"
+#include "Tracker.h"
+#include "FilePersistence.h"
+#include "ISerializer.h"
 
 void RegisterComponents() {
 	eden_ec::ComponentFactory* factory = eden_ec::ComponentFactory::getInstance();
@@ -60,4 +65,22 @@ void LoadScene() {
 	eden_render::RenderManager::getInstance()->SetWindowName("DAMN");
 	eden_render::RenderManager::getInstance()->SetWindowIcon("damnlogo64.bmp");
 	scnManager->PushScene("Menu");
+
+	InitValues init = Tracker::Init("Damn", Tracker::P_FILE, Tracker::S_JSON);
+	if (init.couldInitialize) {
+		init.serializer->init(nullptr);
+		static_cast<FilePersistence*> (init.persistence)->Init("telemetry.json");
+
+		ProgressionTracker* progressionTracker = new ProgressionTracker();
+		Tracker::Instance()->AddTrackerAsset(progressionTracker);
+
+		GameEventTracker* gameTracker = new GameEventTracker();
+		Tracker::Instance()->AddTrackerAsset(gameTracker);
+
+		Tracker::Instance()->Start();
+	}
+}
+
+void EndGame() {
+	Tracker::End();
 }

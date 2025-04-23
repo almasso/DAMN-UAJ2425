@@ -122,6 +122,8 @@ void eden_export::RunEDEN()
 			}
 
 			else {
+				EndGame = reinterpret_cast<SceneFunc>(GetProcAddress(game, "EndGame"));
+
 				// Registro de componentes
 				RegisterEngineComponents();
 				eden_ec::ComponentFactory* factory = eden_ec::ComponentFactory::Instance();
@@ -145,6 +147,7 @@ void eden_export::RunEDEN()
 
 void eden_export::StopEDEN()
 {
+	if (EndGame != NULL) EndGame();
 	master->Close();
 	FreeLibrary(game); // liberaci�n de memoria de la .dll del juego
 	errorHandler->Close();

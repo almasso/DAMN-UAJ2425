@@ -71,7 +71,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(SolutionDir)Telemetry-System\TelemetrySystem\Bin\;$(SolutionDir)bin\;$(SolutionDir)EDEN\dependencies\Lua\build\$(Platform)\$(Configuration)\</AdditionalLibraryDirectories>
-      <AdditionalDependencies>TelemetrySystem.lib;EDEN_Export_d.lib;%(AdditionalDependencies);lua.lib</AdditionalDependencies>
+      <AdditionalDependencies>TelemetrySystem_d.lib;EDEN_Export_d.lib;%(AdditionalDependencies);lua.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

@@ -20,8 +20,7 @@
 
 #include "LevelStartEvent.h"
 #include "LevelEndEvent.h"
-#include "ProgressionTracker.h"
-#include "GameEventTracker.h"
+
 
 void damn::GameManager::ManageTimer(float dt)
 {
@@ -37,7 +36,6 @@ void damn::GameManager::ManageTimer(float dt)
 damn::GameManager::~GameManager()
 {
 	if (levelsStated != levelsEnded)SetLevelEndEvent();
-	Tracker::End();
 }
 
 void damn::GameManager::Update(float dt)
@@ -133,21 +131,6 @@ void damn::GameManager::LoseGame() {
 
 void damn::GameManager::Init(eden_script::ComponentArguments* args)
 {
-	InitValues init = Tracker::Init("Damn", Tracker::P_FILE, Tracker::S_JSON);
-	if (init.couldInitialize) {
-		init.serializer->init(nullptr);
-		static_cast<FilePersistence*> (init.persistence)->Init("telemetry.json");
-
-		ProgressionTracker* progressionTracker = new ProgressionTracker();
-		Tracker::Instance()->AddTrackerAsset(progressionTracker);
-
-		GameEventTracker* gameTracker = new GameEventTracker();
-		Tracker::Instance()->AddTrackerAsset(gameTracker);
-
-		Tracker::Instance()->Start();
-	}
-
-
 	_maxTime = args->GetValueToFloat("MaxTime");
 	_timer = 0;
 	_timeNextRound = _timer + _timeCalm;
