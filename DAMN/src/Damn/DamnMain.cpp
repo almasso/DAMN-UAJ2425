@@ -69,7 +69,7 @@ void LoadScene() {
 	InitValues init = Tracker::Init("Damn", Tracker::P_FILE, Tracker::S_JSON);
 	if (init.couldInitialize) {
 		init.serializer->init(nullptr);
-		static_cast<FilePersistence*> (init.persistence)->Init("telemetry.json");
+		static_cast<FilePersistence*> (init.persistence)->Init("telemetry");
 
 		ProgressionTracker* progressionTracker = new ProgressionTracker();
 		Tracker::Instance()->AddTrackerAsset(progressionTracker);
